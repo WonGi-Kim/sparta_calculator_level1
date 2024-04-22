@@ -15,51 +15,76 @@ import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) {
-        /** 과제 요구사항 .3
-         * 입력받은 양의 정수 2개와 사칙연산 기호를 사용하여 연산을 진행한 후 결과값을 출력합니다.
-         * 사칙연산 기호에 맞는 연산자를 사용하여 연산을 진행합니다 (e.g. if, switch)
-         * 연산 오류가 발생할 경우 해당 오류에 대한 내용을 정제하여 출력합니다.
-         * e.g. "나눗셈 연산에서 분모(두 번째 정수)에 0이 입력될 수 없습니다.
+        /** 과제 요구사항 .4
+         * 반복문을 사용하여 반복의 종료를 알려주는 exit 문자열을 입력하기 전 까지 무한으로 계산을 진행한다.
          */
 
         Scanner in = new Scanner(System.in);
 
         int a; // 첫 번째 숫자
         int b; // 두 번째 숫자
-        char operand;
-        int result;
+        char operand; // 연산자
+        int result; // 연산 결과
+        int result2; // 나눗셈 나머지 연산 임시 사용
 
-        System.out.println("첫 번째 숫자를 입력하세요: ");
-        a = in.nextInt();
+        String finish = new String();
 
-        System.out.println("사칙연산 기호를 입력하세요: ");
-        operand = in.next().charAt(0);
+        // 요구사항 4에서 무한 반복을 구현해야 하므로 while반복문 사용
+        // while문의 내부 조건은 조건이 만족할 때 까지 반복한다.
+        while (!finish.equals("exit")) {
+            System.out.println("첫 번째 숫자를 입력하세요: ");
+            a = in.nextInt();
 
-        System.out.println("두 번째 숫자를 입력하세요: ");
-        b = in.nextInt();
+            System.out.println("사칙연산 기호를 입력하세요: ");
+            operand = in.next().charAt(0);
 
-        // 요구사항 3에서는 연산자 조건의 제어문을 if-else 사용
-        if (operand == '+') {
-            result = a + b;
-            System.out.println(result);
-        } else if (operand == '-') {
-            result = a - b;
-            System.out.println(result);
-        } else if (operand == '*') {
-            result = a * b;
-            System.out.println(result);
-        } else if (operand == '/') {
-            if (b == 0) {
-                System.out.println("나눗셈 연산에서 분모(두 번째 정수)에 0이 입력될 수 없습니다.");
-            } else {
-                result = a / b;
-                System.out.println(result);
+            System.out.println("두 번째 숫자를 입력하세요: ");
+            b = in.nextInt();
+
+            // 요구사항 4에서는 연산자 조건의 제어문을 switch-case 사용
+            switch (operand) {
+                case ('+'):
+                    result = a + b;
+                    System.out.println("결과는 : " + result);
+                    break;
+                case ('-'):
+                    result = a - b;
+                    System.out.println("결과는 : " + result);
+                    break;
+                case ('*'):
+                    result = a * b;
+                    System.out.println("결과는 : " + result);
+                    break;
+                case ('/'):
+                    if(b == 0) {
+                        System.out.println("나눗셈 연산에서 분모(두 번째 정수)에 0이 입력될 수 없습니다.");
+                        break;
+                    }
+                    result = a / b;
+                    result2 = a % b;
+                    System.out.println("결과는 " + "몫 : " + result + " 나머지 : " + result2);
+                    break;
+
+                default:
+                    System.out.println("잘못된 연산자 입니다.");
+                    break;
             }
-        } else {
-            System.out.println("연산자가 잘못되었습니다.");
-        }
 
+            // 요구사항 4의 exit를 위한 입력과 조건
+            System.out.print("더 계산하시겠습니까? ( y 입력시 연산 계속 / exit 입력 시 종료 )");
+            finish = in.next();
+            if (finish.equals("y")) {
+                continue;
+            } else if (finish.equals("exit")) {
+                break;
+            }
+        }
     }
 }
 
+/**
+ * Java에서 문자열을 비교할 때 equlas를 사용한다.
+ * == 연산자는 동일한 객체를 참조하는지 확인한다.
+ * 다른 언어 습관 무섭다...
+ */
 
